@@ -1,88 +1,86 @@
-const generatorBtn=document.getElementById("generatorBtn")
-const checkerBtn=document.getElementById("checkerBtn")
+const genBtn=document.getElementById("genBtn")
+const checkBtn=document.getElementById("checkBtn")
 
-const generatorSection=document.getElementById("generatorSection")
-const checkerSection=document.getElementById("checkerSection")
+const generator=document.getElementById("generator")
+const checker=document.getElementById("checker")
 
-generatorBtn.onclick=()=>{
-generatorSection.style.display="block"
-checkerSection.style.display="none"
+genBtn.onclick=()=>{
+generator.style.display="block"
+checker.style.display="none"
 }
 
-checkerBtn.onclick=()=>{
-generatorSection.style.display="none"
-checkerSection.style.display="block"
+checkBtn.onclick=()=>{
+generator.style.display="none"
+checker.style.display="block"
 }
 
-const result=document.getElementById("result")
-const length=document.getElementById("length")
-
-const uppercase=document.getElementById("uppercase")
-const lowercase=document.getElementById("lowercase")
-const numbers=document.getElementById("numbers")
-const symbols=document.getElementById("symbols")
-
+const password=document.getElementById("password")
 const generate=document.getElementById("generate")
-const clipboard=document.getElementById("clipboard")
 
-const strength=document.getElementById("strength")
-const fill=document.getElementById("strength-fill")
+const length=document.getElementById("length")
+const upper=document.getElementById("upper")
+const lower=document.getElementById("lower")
+const number=document.getElementById("number")
+const symbol=document.getElementById("symbol")
 
+const strengthText=document.getElementById("strengthText")
+const strengthBar=document.getElementById("strengthBar")
 const crackTime=document.getElementById("crackTime")
 
-const copyMsg=document.getElementById("copy-msg")
+const copy=document.getElementById("copy")
+const copyMsg=document.getElementById("copyMsg")
+
+const toggle=document.getElementById("toggle")
+
+let visible=true
+
+toggle.onclick=()=>{
+if(visible){
+password.style.filter="blur(6px)"
+visible=false
+}
+else{
+password.style.filter="none"
+visible=true
+}
+}
 
 generate.onclick=()=>{
 
-let characters=""
+let chars=""
 
-if(lowercase.checked)
-characters+="abcdefghijklmnopqrstuvwxyz"
+if(upper.checked) chars+="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+if(lower.checked) chars+="abcdefghijklmnopqrstuvwxyz"
+if(number.checked) chars+="0123456789"
+if(symbol.checked) chars+="!@#$%^&*()"
 
-if(uppercase.checked)
-characters+="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-if(numbers.checked)
-characters+="0123456789"
-
-if(symbols.checked)
-characters+="!@#$%^&*()"
-
-let animationTime=12
+let anim=10
 
 let interval=setInterval(()=>{
 
 let temp=""
 
 for(let i=0;i<length.value;i++){
-
-temp+=characters.charAt(
-Math.floor(Math.random()*characters.length)
-)
-
+temp+=chars[Math.floor(Math.random()*chars.length)]
 }
 
-result.innerText=temp
+password.innerText=temp
 
-animationTime--
+anim--
 
-if(animationTime===0){
+if(anim===0){
 
 clearInterval(interval)
 
-let password=""
+let final=""
 
 for(let i=0;i<length.value;i++){
-
-password+=characters.charAt(
-Math.floor(Math.random()*characters.length)
-)
-
+final+=chars[Math.floor(Math.random()*chars.length)]
 }
 
-result.innerText=password
+password.innerText=final
 
-checkStrength(password)
+checkStrength(final)
 
 }
 
@@ -90,9 +88,9 @@ checkStrength(password)
 
 }
 
-clipboard.onclick=()=>{
+copy.onclick=()=>{
 
-navigator.clipboard.writeText(result.innerText)
+navigator.clipboard.writeText(password.innerText)
 
 copyMsg.innerText="Copied!"
 
@@ -104,80 +102,77 @@ copyMsg.innerText=""
 
 }
 
-/* strength checker */
-
-function checkStrength(password){
+function checkStrength(pass){
 
 let score=0
 
-if(password.length>=8) score++
-if(/[A-Z]/.test(password)) score++
-if(/[0-9]/.test(password)) score++
-if(/[!@#$%^&*]/.test(password)) score++
+if(pass.length>=8) score++
+if(/[A-Z]/.test(pass)) score++
+if(/[0-9]/.test(pass)) score++
+if(/[!@#$%^&*]/.test(pass)) score++
 
-let percent=score*25
+let width=score*25
 
-fill.style.width=percent+"%"
+strengthBar.style.width=width+"%"
 
 if(score<=2){
-strength.innerText="Weak 🔴"
-fill.style.background="red"
-crackTime.innerText="Estimated crack time: seconds to minutes"
+strengthText.innerText="Weak"
+strengthBar.style.background="red"
+crackTime.innerText="Crack time: seconds"
 }
 
-else if(score===3){
-strength.innerText="Medium 🟡"
-fill.style.background="orange"
-crackTime.innerText="Estimated crack time: hours to days"
+else if(score==3){
+strengthText.innerText="Medium"
+strengthBar.style.background="orange"
+crackTime.innerText="Crack time: hours"
 }
 
 else{
-strength.innerText="Strong 🟢"
-fill.style.background="lime"
-crackTime.innerText="Estimated crack time: years"
+strengthText.innerText="Strong"
+strengthBar.style.background="lime"
+crackTime.innerText="Crack time: years"
 }
 
 }
 
-/* manual checker */
+/* password checker */
 
-const manualPassword=document.getElementById("manual-password")
-const manualStrength=document.getElementById("manual-strength")
+const checkInput=document.getElementById("checkInput")
+const checkStrengthText=document.getElementById("checkStrength")
+const checkBar=document.getElementById("checkBar")
+const checkTime=document.getElementById("checkTime")
 
-const manualFill=document.getElementById("manual-fill")
-const manualTime=document.getElementById("manualTime")
+checkInput.addEventListener("input",()=>{
 
-manualPassword.addEventListener("input",()=>{
-
-let password=manualPassword.value
+let pass=checkInput.value
 
 let score=0
 
-if(password.length>=8) score++
-if(/[A-Z]/.test(password)) score++
-if(/[0-9]/.test(password)) score++
-if(/[!@#$%^&*]/.test(password)) score++
+if(pass.length>=8) score++
+if(/[A-Z]/.test(pass)) score++
+if(/[0-9]/.test(pass)) score++
+if(/[!@#$%^&*]/.test(pass)) score++
 
-let percent=score*25
+let width=score*25
 
-manualFill.style.width=percent+"%"
+checkBar.style.width=width+"%"
 
 if(score<=1){
-manualStrength.innerText="Weak 🔴"
-manualFill.style.background="red"
-manualTime.innerText="Estimated crack time: seconds"
+checkStrengthText.innerText="Weak"
+checkBar.style.background="red"
+checkTime.innerText="Crack time: seconds"
 }
 
 else if(score<=3){
-manualStrength.innerText="Medium 🟡"
-manualFill.style.background="orange"
-manualTime.innerText="Estimated crack time: hours"
+checkStrengthText.innerText="Medium"
+checkBar.style.background="orange"
+checkTime.innerText="Crack time: hours"
 }
 
 else{
-manualStrength.innerText="Strong 🟢"
-manualFill.style.background="lime"
-manualTime.innerText="Estimated crack time: years"
+checkStrengthText.innerText="Strong"
+checkBar.style.background="lime"
+checkTime.innerText="Crack time: years"
 }
 
 })

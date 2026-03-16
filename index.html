@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Password Generator</title>
+<title>Password Generator Tool</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -16,45 +16,38 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <body>
 
-<div class="background"></div>
-
 <div class="container">
 
 <h2>🔐 Password Tool</h2>
 
-<div class="mode-buttons">
-<button id="generatorBtn">Generate</button>
-<button id="checkerBtn">Check Password</button>
+<div class="mode">
+<button id="genBtn">Generate</button>
+<button id="checkBtn">Check</button>
 </div>
 
-<!-- GENERATOR SECTION -->
+<!-- GENERATOR -->
 
-<div id="generatorSection">
+<div id="generator">
 
-<div class="result-container">
+<div class="result">
 
-<span id="result"></span>
+<span id="password"></span>
 
-<div>
-
-<button id="toggle">
-<i class="fa fa-eye"></i>
-</button>
-
-<button id="clipboard">
-<i class="fa fa-copy"></i>
-</button>
-
+<div class="icons">
+<button id="toggle"><i class="fa fa-eye"></i></button>
+<button id="copy"><i class="fa fa-copy"></i></button>
 </div>
 
 </div>
+
+<p id="copyMsg"></p>
 
 <div class="strength">
 
-Strength: <span id="strength">-</span>
+<p>Strength: <span id="strengthText">-</span></p>
 
-<div class="strength-bar">
-<div id="strength-fill"></div>
+<div class="bar">
+<div id="strengthBar"></div>
 </div>
 
 <p id="crackTime"></p>
@@ -63,59 +56,51 @@ Strength: <span id="strength">-</span>
 
 <div class="settings">
 
-<div class="setting">
 <label>Password Length</label>
-<input type="number" id="length" min="6" max="25" value="12">
-</div>
+<input type="number" id="length" value="12" min="6" max="30">
 
-<div class="setting">
-<label>Uppercase</label>
-<input type="checkbox" id="uppercase" checked>
-</div>
-
-<div class="setting">
-<label>Lowercase</label>
-<input type="checkbox" id="lowercase" checked>
-</div>
-
-<div class="setting">
-<label>Numbers</label>
-<input type="checkbox" id="numbers" checked>
-</div>
-
-<div class="setting">
-<label>Symbols</label>
-<input type="checkbox" id="symbols" checked>
-</div>
+<label><input type="checkbox" id="upper" checked> Uppercase</label>
+<label><input type="checkbox" id="lower" checked> Lowercase</label>
+<label><input type="checkbox" id="number" checked> Numbers</label>
+<label><input type="checkbox" id="symbol" checked> Symbols</label>
 
 </div>
 
-<button class="btn" id="generate">Generate Password</button>
+<button id="generate">Generate Password</button>
 
 </div>
 
-<!-- CHECKER SECTION -->
+<!-- CHECKER -->
 
-<div id="checkerSection">
+<div id="checker">
 
-<label>Enter Password</label>
+<input type="text" id="checkInput" placeholder="Enter password">
 
-<input type="text" id="manual-password">
+<p>Strength: <span id="checkStrength"></span></p>
 
-<p>
-Strength:
-<span id="manual-strength">-</span>
-</p>
-
-<div class="strength-bar">
-<div id="manual-fill"></div>
+<div class="bar">
+<div id="checkBar"></div>
 </div>
 
-<p id="manualTime"></p>
+<p id="checkTime"></p>
 
 </div>
 
-<p id="copy-msg"></p>
+<!-- TIPS -->
+
+<div class="tips">
+
+<h4>Password Tips</h4>
+
+<ul>
+<li>Use 12+ characters</li>
+<li>Mix letters, numbers and symbols</li>
+<li>Avoid common words</li>
+<li>Use unique passwords for each account</li>
+
+</ul>
+
+</div>
 
 </div>
 
