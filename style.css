@@ -4,24 +4,18 @@ font-family:Arial;
 }
 
 body{
-
 margin:0;
 height:100vh;
-
 display:flex;
 align-items:center;
 justify-content:center;
-
 color:white;
-
 }
 
-/* Animated Background */
+/* Animated background */
 
 .background{
-
 position:fixed;
-
 width:100%;
 height:100%;
 
@@ -38,133 +32,113 @@ background-size:800% 800%;
 animation:gradient 12s ease infinite;
 
 z-index:-1;
-
 }
 
 @keyframes gradient{
-
 0%{background-position:0% 50%;}
 50%{background-position:100% 50%;}
 100%{background-position:0% 50%;}
-
 }
 
-/* Container */
+/* container */
 
 .container{
-
 background:rgba(0,0,0,0.6);
-
 padding:30px;
-
-width:360px;
-
+width:370px;
 border-radius:15px;
-
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
-
+box-shadow:0 15px 35px rgba(0,0,0,0.5);
+backdrop-filter:blur(10px);
 }
 
-/* Mode Buttons */
-
-.mode-buttons{
-
-display:flex;
-
-justify-content:space-between;
-
-margin-bottom:15px;
-
-}
-
-.mode-buttons button{
-
-width:48%;
-
-}
-
-/* Result */
-
-.result-container{
-
-background:rgba(255,255,255,0.1);
-
-display:flex;
-
-justify-content:space-between;
-
-padding:10px;
-
-border-radius:8px;
-
-margin-bottom:10px;
-
-}
-
-/* Settings */
-
-.setting{
-
-display:flex;
-
-justify-content:space-between;
-
-margin:10px 0;
-
-}
-
-/* Buttons */
+/* buttons */
 
 button{
-
 background:linear-gradient(45deg,#ff7a18,#ffb347);
-
 border:none;
-
 color:white;
-
-padding:10px;
-
+padding:8px 10px;
 border-radius:6px;
-
 cursor:pointer;
-
 transition:0.3s;
-
 }
 
 button:hover{
-
 transform:scale(1.05);
-
 }
 
 .btn{
-
 width:100%;
-
 margin-top:10px;
-
 }
 
-/* Checker */
+/* mode buttons */
+
+.mode-buttons{
+display:flex;
+justify-content:space-between;
+margin-bottom:15px;
+}
+
+.mode-buttons button{
+width:48%;
+}
+
+/* result box */
+
+.result-container{
+background:rgba(255,255,255,0.1);
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px;
+border-radius:8px;
+margin-bottom:10px;
+}
+
+/* strength bar */
+
+.strength-bar{
+height:8px;
+background:#333;
+border-radius:10px;
+margin-top:5px;
+}
+
+#strength-fill,
+#manual-fill{
+height:100%;
+width:0%;
+border-radius:10px;
+background:red;
+}
+
+/* settings */
+
+.setting{
+display:flex;
+justify-content:space-between;
+margin:10px 0;
+}
+
+/* checker section */
 
 #checkerSection{
-
 display:none;
-
 }
 
 #checkerSection input{
-
 width:100%;
-
 padding:10px;
-
-border-radius:5px;
-
 border:none;
-
+border-radius:6px;
 margin-top:5px;
+}
 
+/* responsive */
+
+@media(max-width:600px){
+.container{
+width:90%;
+}
 }

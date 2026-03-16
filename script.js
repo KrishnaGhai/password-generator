@@ -1,154 +1,183 @@
-const generatorBtn = document.getElementById("generatorBtn")
-const checkerBtn = document.getElementById("checkerBtn")
+const generatorBtn=document.getElementById("generatorBtn")
+const checkerBtn=document.getElementById("checkerBtn")
 
-const generatorSection = document.getElementById("generatorSection")
-const checkerSection = document.getElementById("checkerSection")
+const generatorSection=document.getElementById("generatorSection")
+const checkerSection=document.getElementById("checkerSection")
 
-generatorBtn.onclick = () => {
-
-generatorSection.style.display = "block"
-checkerSection.style.display = "none"
-
+generatorBtn.onclick=()=>{
+generatorSection.style.display="block"
+checkerSection.style.display="none"
 }
 
-checkerBtn.onclick = () => {
-
-generatorSection.style.display = "none"
-checkerSection.style.display = "block"
-
+checkerBtn.onclick=()=>{
+generatorSection.style.display="none"
+checkerSection.style.display="block"
 }
 
-const result = document.getElementById("result")
-const length = document.getElementById("length")
+const result=document.getElementById("result")
+const length=document.getElementById("length")
 
-const uppercase = document.getElementById("uppercase")
-const lowercase = document.getElementById("lowercase")
-const numbers = document.getElementById("numbers")
-const symbols = document.getElementById("symbols")
+const uppercase=document.getElementById("uppercase")
+const lowercase=document.getElementById("lowercase")
+const numbers=document.getElementById("numbers")
+const symbols=document.getElementById("symbols")
 
-const generate = document.getElementById("generate")
-const clipboard = document.getElementById("clipboard")
+const generate=document.getElementById("generate")
+const clipboard=document.getElementById("clipboard")
 
-const strength = document.getElementById("strength")
-const copyMsg = document.getElementById("copy-msg")
+const strength=document.getElementById("strength")
+const fill=document.getElementById("strength-fill")
 
-generate.onclick = () => {
+const crackTime=document.getElementById("crackTime")
 
-let characters = ""
+const copyMsg=document.getElementById("copy-msg")
+
+generate.onclick=()=>{
+
+let characters=""
 
 if(lowercase.checked)
-characters += "abcdefghijklmnopqrstuvwxyz"
+characters+="abcdefghijklmnopqrstuvwxyz"
 
 if(uppercase.checked)
-characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+characters+="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 if(numbers.checked)
-characters += "0123456789"
+characters+="0123456789"
 
 if(symbols.checked)
-characters += "!@#$%^&*()"
+characters+="!@#$%^&*()"
 
-let animationTime = 15
+let animationTime=12
 
-let interval = setInterval(() => {
+let interval=setInterval(()=>{
 
-let tempPassword = ""
+let temp=""
 
-for(let i = 0; i < length.value; i++){
+for(let i=0;i<length.value;i++){
 
-tempPassword += characters.charAt(
-Math.floor(Math.random() * characters.length)
+temp+=characters.charAt(
+Math.floor(Math.random()*characters.length)
 )
 
 }
 
-result.innerText = tempPassword
+result.innerText=temp
 
 animationTime--
 
-if(animationTime === 0){
+if(animationTime===0){
 
 clearInterval(interval)
 
-let finalPassword = ""
+let password=""
 
-for(let i = 0; i < length.value; i++){
+for(let i=0;i<length.value;i++){
 
-finalPassword += characters.charAt(
-Math.floor(Math.random() * characters.length)
+password+=characters.charAt(
+Math.floor(Math.random()*characters.length)
 )
 
 }
 
-result.innerText = finalPassword
+result.innerText=password
 
-checkStrength(finalPassword)
-
-}
-
-}, 50)
+checkStrength(password)
 
 }
 
-clipboard.onclick = () => {
+},50)
 
-if(!result.innerText) return
+}
+
+clipboard.onclick=()=>{
 
 navigator.clipboard.writeText(result.innerText)
 
-copyMsg.innerText = "Password Copied!"
+copyMsg.innerText="Copied!"
 
-setTimeout(() => {
+setTimeout(()=>{
 
-copyMsg.innerText = ""
+copyMsg.innerText=""
 
-}, 2000)
+},2000)
 
 }
+
+/* strength checker */
 
 function checkStrength(password){
 
-let score = 0
+let score=0
 
-if(password.length >= 8) score++
+if(password.length>=8) score++
 if(/[A-Z]/.test(password)) score++
 if(/[0-9]/.test(password)) score++
 if(/[!@#$%^&*]/.test(password)) score++
 
-if(score <= 2)
-strength.innerText = "Weak 🔴"
+let percent=score*25
 
-else if(score === 3)
-strength.innerText = "Medium 🟡"
+fill.style.width=percent+"%"
 
-else
-strength.innerText = "Strong 🟢"
+if(score<=2){
+strength.innerText="Weak 🔴"
+fill.style.background="red"
+crackTime.innerText="Estimated crack time: seconds to minutes"
+}
+
+else if(score===3){
+strength.innerText="Medium 🟡"
+fill.style.background="orange"
+crackTime.innerText="Estimated crack time: hours to days"
+}
+
+else{
+strength.innerText="Strong 🟢"
+fill.style.background="lime"
+crackTime.innerText="Estimated crack time: years"
+}
 
 }
 
-/* Manual Password Checker */
+/* manual checker */
 
-const manualPassword = document.getElementById("manual-password")
-const manualStrength = document.getElementById("manual-strength")
+const manualPassword=document.getElementById("manual-password")
+const manualStrength=document.getElementById("manual-strength")
 
-manualPassword.addEventListener("input", () => {
+const manualFill=document.getElementById("manual-fill")
+const manualTime=document.getElementById("manualTime")
 
-let password = manualPassword.value
+manualPassword.addEventListener("input",()=>{
 
-let score = 0
+let password=manualPassword.value
 
-if(password.length >= 8) score++
+let score=0
+
+if(password.length>=8) score++
 if(/[A-Z]/.test(password)) score++
 if(/[0-9]/.test(password)) score++
 if(/[!@#$%^&*]/.test(password)) score++
 
-if(score <= 1)
-manualStrength.innerText = "Weak 🔴"
+let percent=score*25
 
-else if(score <= 3)
-manualStrength.innerText = "Medium 🟡"
+manualFill.style.width=percent+"%"
 
-else
-manualStrength.innerText = "Strong 🟢"
+if(score<=1){
+manualStrength.innerText="Weak 🔴"
+manualFill.style.background="red"
+manualTime.innerText="Estimated crack time: seconds"
+}
+
+else if(score<=3){
+manualStrength.innerText="Medium 🟡"
+manualFill.style.background="orange"
+manualTime.innerText="Estimated crack time: hours"
+}
+
+else{
+manualStrength.innerText="Strong 🟢"
+manualFill.style.background="lime"
+manualTime.innerText="Estimated crack time: years"
+}
 
 })

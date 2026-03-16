@@ -5,11 +5,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Password Tool</title>
+<title>Password Generator</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
 
@@ -22,14 +23,11 @@
 <h2>🔐 Password Tool</h2>
 
 <div class="mode-buttons">
-
-<button id="generatorBtn">Generate Password</button>
-
+<button id="generatorBtn">Generate</button>
 <button id="checkerBtn">Check Password</button>
-
 </div>
 
-<!-- PASSWORD GENERATOR -->
+<!-- GENERATOR SECTION -->
 
 <div id="generatorSection">
 
@@ -37,21 +35,37 @@
 
 <span id="result"></span>
 
+<div>
+
+<button id="toggle">
+<i class="fa fa-eye"></i>
+</button>
+
 <button id="clipboard">
 <i class="fa fa-copy"></i>
 </button>
 
 </div>
 
+</div>
+
 <div class="strength">
+
 Strength: <span id="strength">-</span>
+
+<div class="strength-bar">
+<div id="strength-fill"></div>
+</div>
+
+<p id="crackTime"></p>
+
 </div>
 
 <div class="settings">
 
 <div class="setting">
 <label>Password Length</label>
-<input type="number" id="length" min="4" max="25" value="12">
+<input type="number" id="length" min="6" max="25" value="12">
 </div>
 
 <div class="setting">
@@ -76,28 +90,28 @@ Strength: <span id="strength">-</span>
 
 </div>
 
-<button class="btn" id="generate">
-Generate Password
-</button>
+<button class="btn" id="generate">Generate Password</button>
 
 </div>
 
-<!-- PASSWORD CHECKER -->
+<!-- CHECKER SECTION -->
 
 <div id="checkerSection">
 
 <label>Enter Password</label>
 
-<input
-type="text"
-id="manual-password"
-placeholder="Type your password here"
-/>
+<input type="text" id="manual-password">
 
 <p>
 Strength:
 <span id="manual-strength">-</span>
 </p>
+
+<div class="strength-bar">
+<div id="manual-fill"></div>
+</div>
+
+<p id="manualTime"></p>
 
 </div>
 
