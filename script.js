@@ -1,62 +1,154 @@
-const resultEl = document.getElementById("result");
-const lengthEl = document.getElementById("length");
-const uppercaseEl = document.getElementById("uppercase");
-const lowercaseEl = document.getElementById("lowercase");
-const numbersEl = document.getElementById("numbers");
-const symbolsEl = document.getElementById("symbols");
-const generateEl = document.getElementById("generate");
-const clipboardEl = document.getElementById("clipboard");
+const generatorBtn = document.getElementById("generatorBtn")
+const checkerBtn = document.getElementById("checkerBtn")
 
-generateEl.addEventListener("click", () => {
+const generatorSection = document.getElementById("generatorSection")
+const checkerSection = document.getElementById("checkerSection")
 
-const length = lengthEl.value;
+generatorBtn.onclick = () => {
 
-let characters = "";
-
-if(lowercaseEl.checked)
-characters += "abcdefghijklmnopqrstuvwxyz";
-
-if(uppercaseEl.checked)
-characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-if(numbersEl.checked)
-characters += "0123456789";
-
-if(symbolsEl.checked)
-characters += "!@#$%^&*(){}[]=<>/,";
-
-let password = "";
-
-for(let i=0;i<length;i++){
-
-password += characters.charAt(
-Math.floor(Math.random() * characters.length)
-);
+generatorSection.style.display = "block"
+checkerSection.style.display = "none"
 
 }
 
-resultEl.innerText = password;
+checkerBtn.onclick = () => {
 
-});
+generatorSection.style.display = "none"
+checkerSection.style.display = "block"
 
-clipboardEl.addEventListener("click", () => {
+}
 
-const textarea = document.createElement("textarea");
+const result = document.getElementById("result")
+const length = document.getElementById("length")
 
-const password = resultEl.innerText;
+const uppercase = document.getElementById("uppercase")
+const lowercase = document.getElementById("lowercase")
+const numbers = document.getElementById("numbers")
+const symbols = document.getElementById("symbols")
 
-if(!password) return;
+const generate = document.getElementById("generate")
+const clipboard = document.getElementById("clipboard")
 
-textarea.value = password;
+const strength = document.getElementById("strength")
+const copyMsg = document.getElementById("copy-msg")
 
-document.body.appendChild(textarea);
+generate.onclick = () => {
 
-textarea.select();
+let characters = ""
 
-document.execCommand("copy");
+if(lowercase.checked)
+characters += "abcdefghijklmnopqrstuvwxyz"
 
-textarea.remove();
+if(uppercase.checked)
+characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-alert("Password copied to clipboard");
+if(numbers.checked)
+characters += "0123456789"
 
-});
+if(symbols.checked)
+characters += "!@#$%^&*()"
+
+let animationTime = 15
+
+let interval = setInterval(() => {
+
+let tempPassword = ""
+
+for(let i = 0; i < length.value; i++){
+
+tempPassword += characters.charAt(
+Math.floor(Math.random() * characters.length)
+)
+
+}
+
+result.innerText = tempPassword
+
+animationTime--
+
+if(animationTime === 0){
+
+clearInterval(interval)
+
+let finalPassword = ""
+
+for(let i = 0; i < length.value; i++){
+
+finalPassword += characters.charAt(
+Math.floor(Math.random() * characters.length)
+)
+
+}
+
+result.innerText = finalPassword
+
+checkStrength(finalPassword)
+
+}
+
+}, 50)
+
+}
+
+clipboard.onclick = () => {
+
+if(!result.innerText) return
+
+navigator.clipboard.writeText(result.innerText)
+
+copyMsg.innerText = "Password Copied!"
+
+setTimeout(() => {
+
+copyMsg.innerText = ""
+
+}, 2000)
+
+}
+
+function checkStrength(password){
+
+let score = 0
+
+if(password.length >= 8) score++
+if(/[A-Z]/.test(password)) score++
+if(/[0-9]/.test(password)) score++
+if(/[!@#$%^&*]/.test(password)) score++
+
+if(score <= 2)
+strength.innerText = "Weak 🔴"
+
+else if(score === 3)
+strength.innerText = "Medium 🟡"
+
+else
+strength.innerText = "Strong 🟢"
+
+}
+
+/* Manual Password Checker */
+
+const manualPassword = document.getElementById("manual-password")
+const manualStrength = document.getElementById("manual-strength")
+
+manualPassword.addEventListener("input", () => {
+
+let password = manualPassword.value
+
+let score = 0
+
+if(password.length >= 8) score++
+if(/[A-Z]/.test(password)) score++
+if(/[0-9]/.test(password)) score++
+if(/[!@#$%^&*]/.test(password)) score++
+
+if(score <= 1)
+manualStrength.innerText = "Weak 🔴"
+
+else if(score <= 3)
+manualStrength.innerText = "Medium 🟡"
+
+else
+manualStrength.innerText = "Strong 🟢"
+
+})
